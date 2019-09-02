@@ -85,6 +85,7 @@
 
 #define EXTI_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3C00)
 #define SPI1_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3000)
+#define SPI4_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3400)
 #define SYSCFG_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3800)
 #define USART1_BASEADDR					(AHB2PERIPH_BASEADDR + 0x1000)
 #define USART6_BASEADDR					(AHB2PERIPH_BASEADDR + 0x1400)
@@ -168,7 +169,7 @@ typedef struct
 	volatile uint32_t TXCRCR;
 	volatile uint32_t I2SCFGR;
 	volatile uint32_t I2SPR;
-}SPI_Regdef_t;
+}SPI_RegDef_t;
 
 
 /*
@@ -204,6 +205,7 @@ typedef struct
 #define SPI1						((SPI_RegDef_t*)SPI1_BASEADDR)
 #define SPI2						((SPI_RegDef_t*)SPI2_BASEADDR)
 #define SPI3						((SPI_RegDef_t*)SPI3_BASEADDR)
+#define SPI4						((SPI_RegDef_t*)SPI4_BASEADDR)
 
 /*************************Clock enable macros for GPIOx peripherals*****************************/
 
@@ -226,7 +228,6 @@ typedef struct
 #define SPI1_PCLK_EN()			(RCC->APB2ENR |= (1 << 12))
 #define SPI2_PCLK_EN()			(RCC->APB1ENR |= (1 << 14))
 #define SPI3_PCLK_EN()			(RCC->APB1ENR |= (1 << 15))
-#define SPI4_PCLK_EN()			(RCC->APB2ENR |= (1 << 13))
 
 /*************************Clock enable macros for USARTx peripherals***************************/
 
@@ -252,9 +253,11 @@ typedef struct
 
 #define I2C1_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 21))
 
-/*************************Clock disable macros for I2Cx peripherals*****************************/
+/*************************Clock disable macros for SPIx peripherals*****************************/
 
 #define SPI1_PCLK_DI()			(RCC->APB2ENR &= ~(1 << 12))
+#define SPI2_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 14))
+#define SPI3_PCLK_DI()			(RCC->APB1ENR &= ~(1 << 15))
 
 /*************************Clock disable macros for USARTx peripherals***************************/
 
