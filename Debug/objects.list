@@ -1,4 +1,0 @@
-"drivers/src/stm32f407xx_gpio_driver.o"
-"src/main.o"
-"startup/startup_stm32.o"
-"startup/sysmem.o"
