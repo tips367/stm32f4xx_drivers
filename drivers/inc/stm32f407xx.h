@@ -38,7 +38,7 @@
 
 #define NO_PR_BITS_IMPLEMENTED			4
 
-/*base address of flash and SRAM memories */
+/* base addresses of flash and SRAM memories */
 
 #define FLASH_BASEADDR					0x08000000U
 #define SRAM1_BASEADDR					0x20000000U
@@ -54,7 +54,7 @@
 #define AHB1PERIPH_BASEADDR				0x40020000U
 #define AHB2PERIPH_BASEADDR				0x50000000U
 
-/* Base adresses of peripherals hanging on AHB1 bus */
+/* Base addresses of peripherals hanging on AHB1 bus */
 
 #define GPIOA_BASEADDR					(AHB1PERIPH_BASEADDR + 0x0000)
 #define GPIOB_BASEADDR					(AHB1PERIPH_BASEADDR + 0x0400)
@@ -67,7 +67,7 @@
 #define GPIOI_BASEADDR					(AHB1PERIPH_BASEADDR + 0x2000)
 #define RCC_BASEADDR					(AHB1PERIPH_BASEADDR + 0x3800)
 
-/* Base adresses of peripherals hanging on APB1 bus */
+/* Base addresses of peripherals hanging on APB1 bus */
 
 #define I2C1_BASEADDR					(APB1PERIPH_BASEADDR + 0x5400)
 #define I2C2_BASEADDR					(APB1PERIPH_BASEADDR + 0x5800)
@@ -81,7 +81,7 @@
 #define UART4_BASEADDR					(APB1PERIPH_BASEADDR + 0x4C00)
 #define UART5_BASEADDR					(APB1PERIPH_BASEADDR + 0x5000)
 
-/* Base adresses of peripherals hanging on APB2 bus */
+/* Base addresses of peripherals hanging on APB2 bus */
 
 #define EXTI_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3C00)
 #define SPI1_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3000)
