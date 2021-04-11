@@ -93,98 +93,106 @@
 
 /************************ Peripheral register definition structures**************************/
 
+/**
+  * @brief General Purpose I/O
+  */
+
 typedef struct
 {
-	volatile uint32_t MODER;
-	volatile uint32_t OTYPER;
-	volatile uint32_t OSPEEDR;
-	volatile uint32_t PUPDR;
-	volatile uint32_t IDR;
-	volatile uint32_t ODR;
-	volatile uint32_t BSRR;
-	volatile uint32_t LCKR;
-	volatile uint32_t AFR[2];
+	volatile uint32_t MODER;		/*	GPIO port mode register 				*/
+	volatile uint32_t OTYPER;		/*	GPIO port output type register 			*/
+	volatile uint32_t OSPEEDR;		/*	GPIO port output speed register			*/
+	volatile uint32_t PUPDR;		/*	GPIO port pull-up/pull-down register	*/
+	volatile uint32_t IDR;			/*	GPIO port input data register 			*/
+	volatile uint32_t ODR;			/*	GPIO port output data register 			*/
+	volatile uint32_t BSRR;			/*	GPIO port bit set/reset register 		*/
+	volatile uint32_t LCKR;			/*	GPIO port configuration lock register 	*/
+	volatile uint32_t AFR[2];		/*	GPIO alternate function registers 		*/
 }GPIO_RegDef_t;
 
+/**
+  * @brief Reset and Clock Control
+  */
+
 typedef struct
 {
-	volatile uint32_t CR;
-	volatile uint32_t PLLCFGR;
-	volatile uint32_t CFGR;
-	volatile uint32_t CIR;
-	volatile uint32_t AHB1RSTR;
-	volatile uint32_t AHB2RSTR;
-	volatile uint32_t AHB3RSTR;
-	uint32_t RESERVED0;
-	volatile uint32_t APB1RSTR;
-	volatile uint32_t APB2RSTR;
-	uint32_t RESERVED1[2];
-	volatile uint32_t AHB1ENR;
-	volatile uint32_t AHB2ENR;
-	volatile uint32_t AHB3ENR;
-	uint32_t RESERVED2;
-	volatile uint32_t APB1ENR;
-	volatile uint32_t APB2ENR;
-	uint32_t RESERVED3[2];
-	volatile uint32_t AHB1LPENR;
-	volatile uint32_t AHB2LPENR;
-	volatile uint32_t AHB3LPENR;
-	uint32_t RESERVED4;
-	volatile uint32_t APB1LPENR;
-	volatile uint32_t APB2LPENR;
-	uint32_t RESERVED5[2];
-	volatile uint32_t BDCR;
-	volatile uint32_t CSR;
-	uint32_t RESERVED6[2];
-	volatile uint32_t SSCGR;
-	volatile uint32_t PLLI2SCFGR;
+	volatile uint32_t CR;			/*  RCC clock control register        	 							*/
+	volatile uint32_t PLLCFGR;		/*  RCC PLL configuration register        	 						*/
+	volatile uint32_t CFGR;			/*  RCC clock configuration register        	 					*/
+	volatile uint32_t CIR;			/*  RCC clock interrupt register        	 						*/
+	volatile uint32_t AHB1RSTR;		/*  RCC AHB1 peripheral reset register       	 					*/
+	volatile uint32_t AHB2RSTR;		/*  RCC AHB2 peripheral reset register        	 					*/
+	volatile uint32_t AHB3RSTR;		/*  RCC AHB3 peripheral reset register        	 					*/
+	uint32_t RESERVED0;				/*  Reserved        	 											*/
+	volatile uint32_t APB1RSTR;		/*  RCC APB1 peripheral reset register        	 					*/
+	volatile uint32_t APB2RSTR;		/*  RCC APB2 peripheral reset register        	 					*/
+	uint32_t RESERVED1[2];			/*  Reserved        	 											*/
+	volatile uint32_t AHB1ENR;		/*  RCC AHB1 peripheral clock enable register        	 			*/
+	volatile uint32_t AHB2ENR;		/*  RCC AHB2 peripheral clock enable register        	 			*/
+	volatile uint32_t AHB3ENR;		/*  RCC AHB3 peripheral clock enable register        	 			*/
+	uint32_t RESERVED2;				/*  Reserved       	 												*/
+	volatile uint32_t APB1ENR;		/*  RCC APB1 peripheral clock enable register        	 			*/
+	volatile uint32_t APB2ENR;		/*  RCC APB2 peripheral clock enable register       	 			*/
+	uint32_t RESERVED3[2];			/*  Reserved        	 											*/
+	volatile uint32_t AHB1LPENR;	/*  RCC AHB1 peripheral clock enable in low power mode register 	*/
+	volatile uint32_t AHB2LPENR;	/*  RCC AHB2 peripheral clock enable in low power mode register 	*/
+	volatile uint32_t AHB3LPENR;	/*  RCC AHB3 peripheral clock enable in low power mode register 	*/
+	uint32_t RESERVED4;				/*  Reserved        	 											*/
+	volatile uint32_t APB1LPENR;	/*  RCC APB1 peripheral clock enable in low power mode register 	*/
+	volatile uint32_t APB2LPENR;	/*  RCC APB2 peripheral clock enable in low power mode register     */
+	uint32_t RESERVED5[2];			/*  Reserved        	 											*/
+	volatile uint32_t BDCR;			/*  RCC Backup domain control register        	 					*/
+	volatile uint32_t CSR;			/*  RCC clock control & status register        	 					*/
+	uint32_t RESERVED6[2];			/*  Reserved        	 											*/
+	volatile uint32_t SSCGR;		/*  RCC spread spectrum clock generation register        	 		*/
+	volatile uint32_t PLLI2SCFGR;	/*  RCC PLLI2S configuration register        	 					*/
 }RCC_RegDef_t;
 
-/*
- * peripheral register definition structure for EXTI
- */
+/**
+  * @brief External Interrupt/Event Controller
+  */
 
 typedef struct
 {
-	volatile uint32_t IMR;
-	volatile uint32_t EMR;
-	volatile uint32_t RTSR;
-	volatile uint32_t FTSR;
-	volatile uint32_t SWIER;
-	volatile uint32_t PR;
+	volatile uint32_t IMR;			/* EXTI Interrupt mask register 			*/
+	volatile uint32_t EMR;			/* EXTI Event mask register 				*/
+	volatile uint32_t RTSR;			/* EXTI Rising trigger selection register 	*/
+	volatile uint32_t FTSR;			/* EXTI Falling trigger selection register 	*/
+	volatile uint32_t SWIER;		/* EXTI Software interrupt event register 	*/
+	volatile uint32_t PR;			/* EXTI Pending register 					*/
 }EXTI_RegDef_t;
 
-/*
- * peripheral register definition structure for SPI
- */
+/**
+  * @brief Serial Peripheral Interface
+  */
 
 typedef struct
 {
-	volatile uint32_t CR1;
-	volatile uint32_t CR2;
-	volatile uint32_t SR;
-	volatile uint32_t DR;
-	volatile uint32_t CRCPR;
-	volatile uint32_t RXCRCR;
-	volatile uint32_t TXCRCR;
-	volatile uint32_t I2SCFGR;
-	volatile uint32_t I2SPR;
+	volatile uint32_t CR1;			/* SPI control register 1 (not used in I2S mode) 		*/
+	volatile uint32_t CR2;			/* SPI control register 2  								*/
+	volatile uint32_t SR;			/* SPI status register 									*/
+	volatile uint32_t DR;			/* SPI data register 									*/
+	volatile uint32_t CRCPR;		/* SPI CRC polynomial register (not used in I2S mode) 	*/
+	volatile uint32_t RXCRCR;		/* SPI RX CRC register (not used in I2S mode) 			*/
+	volatile uint32_t TXCRCR;		/* SPI TX CRC register (not used in I2S mode) 			*/
+	volatile uint32_t I2SCFGR;		/* SPI_I2S configuration register 						*/
+	volatile uint32_t I2SPR;		/* SPI_I2S prescaler register 							*/
 }SPI_RegDef_t;
 
 
-/*
- * peripheral register definition structure for SYSCFG
- */
+/**
+  * @brief System configuration controller
+  */
 
 typedef struct
 {
-	volatile uint32_t MEMRMP;
-	volatile uint32_t PMC;
-	volatile uint32_t EXTICR[4];
-	volatile uint32_t CMPCR;
+	volatile uint32_t MEMRMP;		/* SYSCFG memory remap register 						*/
+	volatile uint32_t PMC;			/* SYSCFG peripheral mode configuration register 		*/
+	volatile uint32_t EXTICR[4];	/* SYSCFG external interrupt configuration registers 	*/
+	volatile uint32_t CMPCR;		/* SYSCFG Compensation cell control register 			*/
 }SYSCFG_RegDef_t;
 
-/********Peripheral definitions (peripheral base adresses typcasted to xxx_RegDef_t)***********/
+/********Peripheral definitions (peripheral base addresses typecasted to xxx_RegDef_t)***********/
 
 #define GPIOA						((GPIO_RegDef_t*)GPIOA_BASEADDR)
 #define GPIOB						((GPIO_RegDef_t*)GPIOB_BASEADDR)
