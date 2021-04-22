@@ -14,19 +14,17 @@
  *
  * 	@brief				-	This function enables or disables peripheral clock for given GPIO port.
  *
- * 	@param[in]			-	base address of GPIO peripheral
- * 	@param[in]			-	Enable or disable macros
- * 	@param[in]
+ * 	@param[in]			-	Base address of GPIO peripheral
+ * 	@param[in]			-	ENABLE or DISABLE macro
  *
  * 	@return				-	none
  *
  * 	@note				-	none
  *
  */
-
-void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi )
+void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnOrDi)
 {
-	if (EnorDi == ENABLE)
+	if (EnOrDi == ENABLE)
 	{
 		if(pGPIOx == GPIOA)
 		{
@@ -106,44 +104,55 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi )
 	}
 }
 
-/*Init and deinit */
-
+/********************************************************************
+ * 	@function			-	GPIO_Init
+ *
+ * 	@brief				-	Initializes the GPIO
+ *
+ * 	@param[in]			-	pointer to the GPIO handle
+ *
+ * 	@return				-	none
+ *
+ * 	@note				-	none
+ *
+ */
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
 	uint32_t temp=0;
-	// 1. configure the mode of gpio pin
 
+	// 1. configure the mode of gpio pin
 	if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG)
 	{
+		// Non interrupt mode
 		temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2*pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-		pGPIOHandle->pGPIOx->MODER &= ~(0x3<<pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
+		pGPIOHandle->pGPIOx->MODER &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
 		pGPIOHandle->pGPIOx->MODER |= temp; //setting
 	}
-	else		/* Interrupt Mode */
+	else
 	{
+		// Interrupt mode
 		if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT)
 		{
-			// 1. Configure the Falling trigger selection register (FTSR)
+			// Configure the Falling trigger selection register (FTSR)
 			EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 			// Clear corresponding RTSR bit
 			EXTI->RTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 		}
 		else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT)
 		{
-			// 1. Configure the Rising trigger selection register (RTSR)
+			// Configure the Rising trigger selection register (RTSR)
 			EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 			// Clear corresponding FTSR bit
 			EXTI->FTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 		}
 		else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT)
 		{
-			// 1. Configure both FTSR and RTSR
+			// Configure both FTSR and RTSR
 			EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 			EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 		}
 
-		// 2. Configure the GPIO port selection in SYSGFG_EXTICR
-
+		// Configure the GPIO port selection in SYSGFG_EXTICR
 		uint8_t temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber/4;
 		uint8_t temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber%4;
 		uint8_t portcode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx);
@@ -151,38 +160,34 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 		SYSCFG->EXTICR[temp1] = portcode << (temp2*4);
 
 
-		// 3. Enable the exti interrupt delivery using IMR
+		// Enable the EXTI interrupt delivery using IMR
 		EXTI->IMR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber );
 	}
 
-	temp =0;
+	temp = 0;
 
 	// 2. configure the speed
-
 	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed << (2*pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-	pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3<<pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
+	pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
 	pGPIOHandle->pGPIOx->OSPEEDR |= temp; //setting
 
 	temp = 0;
 
 	// 3. configure the pupd settings
-
 	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl << (2*pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-	pGPIOHandle->pGPIOx->PUPDR &= ~(0x3<<pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
+	pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
 	pGPIOHandle->pGPIOx->PUPDR |= temp; //setting
 
 	temp=0;
 
 	// 4. configure the output type
-
 	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinOPType << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-	pGPIOHandle->pGPIOx->OTYPER &= ~(0x1<<pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
-	pGPIOHandle->pGPIOx->OTYPER |= temp;
+	pGPIOHandle->pGPIOx->OTYPER &= ~(0x1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
+	pGPIOHandle->pGPIOx->OTYPER |= temp; // setting
 
 	temp = 0;
 
-	// 5.configure the alternate functionality
-
+	// 5. configure the alternate functionality
 	if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_ALTFN)
 	{
 		uint32_t temp1, temp2;
@@ -359,9 +364,9 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
  *
  */
 
-void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi)
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
 {
-	if (EnorDi == ENABLE)
+	if (EnOrDi == ENABLE)
 	{
 		if(IRQNumber <= 31)
 		{
