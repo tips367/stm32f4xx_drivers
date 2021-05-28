@@ -5,7 +5,6 @@
  *      Author: Tips
  */
 
-
 #include "stm32f407xx.h"
 #include "stm32f407xx_gpio_driver.h"
 
@@ -20,40 +19,40 @@ void delay(void)
 
 int main(void)
 {
-	GPIO_Handle_t gpioled, gpiobtn;
+	GPIO_Handle_t gpioLed, gpioBtn;
 
 	/* LED GPIO configuration */
-	gpioled.pGPIOx = GPIOA;
-	gpioled.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_8;
-	gpioled.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	gpioled.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-	gpioled.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	gpioled.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
-	GPIO_PeriClockControl(GPIOA,ENABLE);
-	GPIO_Init(&gpioled);
+	gpioLed.pGPIOx = GPIOA;
+	gpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_8;
+	gpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+	gpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	gpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	gpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
-	GPIO_PeriClockControl(GPIOD,ENABLE);
-	gpioled.pGPIOx = GPIOD;
-	gpioled.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
-	GPIO_Init(&gpioled);
+	GPIO_PeriClockControl(GPIOA, ENABLE);
+	GPIO_Init(&gpioLed);
+
+	GPIO_PeriClockControl(GPIOD, ENABLE);
+	gpioLed.pGPIOx = GPIOD;
+	gpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GPIO_Init(&gpioLed);
 
 	/* Button GPIO configuration */
-
-	gpiobtn.pGPIOx = GPIOB;
-	gpiobtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_11;
-	gpiobtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
-	gpiobtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-	gpiobtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
-	GPIO_PeriClockControl(GPIOB,ENABLE);
-	GPIO_Init(&gpiobtn);
+	gpioBtn.pGPIOx = GPIOB;
+	gpioBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_11;
+	gpioBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	gpioBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	gpioBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	GPIO_PeriClockControl(GPIOB, ENABLE);
+	GPIO_Init(&gpioBtn);
 
 	while(1)
 	{
-		if(GPIO_ReadFromInputPin(GPIOB,GPIO_PIN_NO_11)==BUTTON_PRESSED)
+		if(GPIO_ReadFromInputPin(GPIOB, GPIO_PIN_NO_11) == BUTTON_PRESSED)
 		{
-			GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_8);
-			GPIO_ToggleOutputPin(GPIOD,GPIO_PIN_NO_13);
 			delay();
+			GPIO_ToggleOutputPin(GPIOA, GPIO_PIN_NO_8);
+			GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
 		}
 	}
 	return 0;
