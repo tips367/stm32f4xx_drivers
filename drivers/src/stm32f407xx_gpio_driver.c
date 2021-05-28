@@ -193,11 +193,23 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 		uint32_t temp1, temp2;
 		temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 8;
 		temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 8;
-		pGPIOHandle->pGPIOx->AFR[temp1] &= ~(0xF << (4*temp2));  //clering
+		pGPIOHandle->pGPIOx->AFR[temp1] &= ~(0xF << (4*temp2));  //clearing
 		pGPIOHandle->pGPIOx->AFR[temp1] |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode << (4*temp2));  //setting
 	}
 }
 
+/********************************************************************
+ * 	@function			-	GPIO_DeInit
+ *
+ * 	@brief				-	De-initialize the GPIO
+ *
+ * 	@param[in]			-	pointer to the GPIO_RegDef_t
+ *
+ * 	@return				-	none
+ *
+ * 	@note				-	none
+ *
+ */
 void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
 {
 	if(pGPIOx == GPIOA)
@@ -241,40 +253,33 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
 /********************************************************************
  * 	@function			-	GPIO_ReadFromInputPin
  *
- * 	@brief				-	This function read value from gpio pin.
+ * 	@brief				-	This function read value from GPIO pin.
  *
  * 	@param[in]			-	base address of GPIO peripheral
  * 	@param[in]			-	Pin number
- * 	@param[in]
  *
  * 	@return				-	0 or 1
  *
  * 	@note				-	none
- *
  */
-
-uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
+uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t pinNumber)
 {
 	uint8_t	value;
-	value = (uint8_t)((pGPIOx->IDR >> PinNumber) & 0x00000001);
+	value = (uint8_t)((pGPIOx->IDR >> pinNumber) & 0x00000001);
 	return value;
 }
 
 /********************************************************************
  * 	@function			-	GPIO_ReadFromInputPort
  *
- * 	@brief				-	This function read value from gpio port.
+ * 	@brief				-	This function read value from GPIO port.
  *
  * 	@param[in]			-	base address of GPIO peripheral
- * 	@param[in]			-
- * 	@param[in]
- *
- * 	@return				-
+
+ * 	@return				-	value read from GPIO port
  *
  * 	@note				-	none
- *
  */
-
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
 {
 	uint16_t	value;
@@ -285,45 +290,40 @@ uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
 /********************************************************************
  * 	@function			-	GPIO_WriteToOutputPin
  *
- * 	@brief				-	This function write value to gpio pin.
+ * 	@brief				-	This function write value to GPIO pin.
  *
  * 	@param[in]			-	base address of GPIO peripheral
- * 	@param[in]			-	Pin number
+ * 	@param[in]			-	pin number
  * 	@param[in]			- 	value to be written
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
-void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t value)
+void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t pinNumber, uint8_t value)
 {
 	if (value == GPIO_PIN_SET)
 	{
-		pGPIOx->ODR |= (1<<PinNumber);
+		pGPIOx->ODR |= (1 << pinNumber);
 	}
 	else
 	{
-		pGPIOx->ODR &= ~(1<<PinNumber);
+		pGPIOx->ODR &= ~(1 << pinNumber);
 	}
 }
 
 /********************************************************************
  * 	@function			-	GPIO_WriteToOutputPort
  *
- * 	@brief				-	This function write value to gpio port.
+ * 	@brief				-	This function write value to GPIO port.
  *
  * 	@param[in]			-	base address of GPIO peripheral
  * 	@param[in]			-	value to be written
- * 	@param[in]			-
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
 void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value)
 {
 	pGPIOx->ODR = value;
@@ -332,21 +332,18 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value)
 /********************************************************************
  * 	@function			-	GPIO_ToggleOutputPin
  *
- * 	@brief				-	This function toggle gpio output pin.
+ * 	@brief				-	This function toggle GPIO output pin.
  *
  * 	@param[in]			-	base address of GPIO peripheral
  * 	@param[in]			-	pin number
- * 	@param[in]			-
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
-void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
+void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t pinNumber)
 {
-	pGPIOx->ODR ^= (1<<PinNumber);
+	pGPIOx->ODR ^= (1 << pinNumber);
 }
 
 /********************************************************************

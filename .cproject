@@ -57,8 +57,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.582207382.1889895489" name="005_Button_Interrupt.c" rcbsApplicability="disable" resourcePath="src/005_Button_Interrupt.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017.574425001">
-						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017.574425001" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017"/>
+					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.582207382.1067856470" name="001_LED_Toggle_Push_Pull.c" rcbsApplicability="disable" resourcePath="src/001_LED_Toggle_Push_Pull.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017.745380183">
+						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017.745380183" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017"/>
 					</fileInfo>
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.582207382.1271380353" name="/" resourcePath="drivers">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.693890270" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
@@ -83,7 +83,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="drivers"/>
-						<entry excluding="005_Button_Interrupt.c|003_LED_Button.c|004_LED_Button_ext.c|002_LED_Toggle_Open_Drain.c|001_LED_Toggle_Push_Pull.c|002_LED_Button.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="006_SPI_Tx_Testing.c|005_Button_Interrupt.c|003_LED_Button.c|004_LED_Button_ext.c|002_LED_Toggle_Open_Drain.c|002_LED_Button.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
 					</sourceEntries>
 				</configuration>
