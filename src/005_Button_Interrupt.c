@@ -16,45 +16,45 @@ void delay(void)
 
 int main(void)
 {
-	GPIO_Handle_t gpioled, gpiobtn;
-	memset(&gpioled,0,sizeof(gpioled));
-	memset(&gpiobtn,0,sizeof(gpiobtn));
+	GPIO_Handle_t gpioLed, gpioBtn;
+	memset(&gpioLed,0,sizeof(gpioLed));
+	memset(&gpioBtn,0,sizeof(gpioBtn));
 
 	/* LED GPIO configuration */
-	gpioled.pGPIOx = GPIOD;
-	gpioled.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-	gpioled.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	gpioled.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
-	gpioled.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	gpioled.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
-	GPIO_PeriClockControl(GPIOD,ENABLE);
-	GPIO_Init(&gpioled);
-	//gpioled.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
-	//GPIO_Init(&gpioled);
+	gpioLed.pGPIOx = GPIOD;
+	gpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	gpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+	gpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
+	gpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	gpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+	GPIO_PeriClockControl(GPIOD, ENABLE);
+	GPIO_Init(&gpioLed);
+
+	gpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GPIO_Init(&gpioLed);
 
 	/* Button GPIO configuration */
+	gpioBtn.pGPIOx = GPIOD;
+	gpioBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_5;
+	gpioBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IT_FT;
+	gpioBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	gpioBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	GPIO_PeriClockControl(GPIOD, ENABLE);
+	GPIO_Init(&gpioBtn);
 
-	gpiobtn.pGPIOx = GPIOA;
-	gpiobtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_0;
-	gpiobtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IT_FT;
-	gpiobtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-	gpiobtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
-	GPIO_PeriClockControl(GPIOA,ENABLE);
-	GPIO_Init(&gpiobtn);
-
-	GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,GPIO_PIN_RESET);
+	GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_12, GPIO_PIN_RESET);
 	// IRQ configurations
-	GPIO_IRQPriorityConfig(IRQ_NO_EXTI0,NVIC_IRQ_PRI15);
-	GPIO_IRQInterruptConfig(IRQ_NO_EXTI0,ENABLE);
+	GPIO_IRQPriorityConfig(IRQ_NO_EXTI9_5, NVIC_IRQ_PRI15);
+	GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5, ENABLE);
 	while(1);
 
 	return 0;
 }
 
-void EXTI0_IRQHandler(void)
+void EXTI9_5_IRQHandler(void)
 {
 	delay();
-	GPIO_IRQHandling(GPIO_PIN_NO_0);
-	GPIO_ToggleOutputPin(GPIOD,GPIO_PIN_NO_12);
-	GPIO_ToggleOutputPin(GPIOD,GPIO_PIN_NO_13);
+	GPIO_IRQHandling(GPIO_PIN_NO_5);
+	GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+	GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
 }

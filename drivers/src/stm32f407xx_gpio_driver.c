@@ -120,7 +120,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
 	uint32_t temp=0;
 
-	// 1. configure the mode of gpio pin
+	// 1. configure the mode of GPIO pin
 	if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG)
 	{
 		// Non interrupt mode
@@ -153,11 +153,11 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 		}
 
 		// Configure the GPIO port selection in SYSGFG_EXTICR
-		uint8_t temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber/4;
-		uint8_t temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber%4;
-		uint8_t portcode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx);
+		uint8_t temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 4;
+		uint8_t temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 4;
+		uint8_t portCode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx);
 		SYSCFG_PCLK_EN();
-		SYSCFG->EXTICR[temp1] = portcode << (temp2*4);
+		SYSCFG->EXTICR[temp1] = portCode << (temp2 * 4);
 
 
 		// Enable the EXTI interrupt delivery using IMR
@@ -353,14 +353,11 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t pinNumber)
  *
  * 	@param[in]			-	IRQ number
  * 	@param[in]			-	Enable or disable
- * 	@param[in]			-
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
 void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
 {
 	if (EnOrDi == ENABLE)
@@ -373,12 +370,12 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
 		else if (IRQNumber > 31 && IRQNumber < 64)
 		{
 			//program ISER1 register
-			*NVIC_ISER1 |= (1 << (IRQNumber%32));
+			*NVIC_ISER1 |= (1 << (IRQNumber % 32));
 		}
 		else if (IRQNumber >= 64 && IRQNumber < 96)
 		{
 			//program ISER2 register
-			*NVIC_ISER2 |= (1 << (IRQNumber%64));
+			*NVIC_ISER2 |= (1 << (IRQNumber % 64));
 		}
 	}
 	else
@@ -391,12 +388,12 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
 		else if (IRQNumber > 31 && IRQNumber < 64)
 		{
 			//program ICER1 register
-			*NVIC_ICER1 |= (1 << (IRQNumber%32));
+			*NVIC_ICER1 |= (1 << (IRQNumber % 32));
 		}
 		else if (IRQNumber >= 64 && IRQNumber < 96)
 		{
 			//program ICER2 register
-			*NVIC_ICER2 |= (1 << (IRQNumber%64));
+			*NVIC_ICER2 |= (1 << (IRQNumber % 64));
 		}
 	}
 }
@@ -408,44 +405,36 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnOrDi)
  *
  * 	@param[in]			-	IRQ number
  * 	@param[in]			-	IRQ priority
- * 	@param[in]			-
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
 void GPIO_IRQPriorityConfig (uint8_t IRQNumber, uint32_t IRQPriority)
 {
-	//find out ipr register
+	// find out IPR register
 	uint8_t iprx = IRQNumber / 4;
-	uint8_t iprx_section = IRQNumber % 4;
-	uint8_t shift_amount = (8*iprx_section) + (8-NO_PR_BITS_IMPLEMENTED);
-	*(NVIC_PR_BASE_ADDR+iprx) |= (IRQPriority << shift_amount);
+	uint8_t iprxSection = IRQNumber % 4;
+	uint8_t shiftAmount = (8 * iprxSection) + (8 - NO_PR_BITS_IMPLEMENTED);
+	*(NVIC_PR_BASE_ADDR + iprx) |= (IRQPriority << shiftAmount);
 }
 
 /********************************************************************
  * 	@function			-	GPIO_IRQHandling
  *
- * 	@brief				-	This function
+ * 	@brief				-	This function clears the EXTI PR register
  *
  * 	@param[in]			-	PIN number
- * 	@param[in]			-
- * 	@param[in]			-
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
-void GPIO_IRQHandling(uint8_t PinNumber)
+void GPIO_IRQHandling(uint8_t pinNumber)
 {
-	// clear the EXTI pr register corresponding to the pin number
-	if(EXTI->PR & (1 << PinNumber))
+	if(EXTI->PR & (1 << pinNumber))
 	{
-		//clear
-		EXTI->PR |= (1<<PinNumber);
+		// clear the EXTI PR register corresponding to the pin number
+		EXTI->PR |= (1 << pinNumber);
 	}
 }

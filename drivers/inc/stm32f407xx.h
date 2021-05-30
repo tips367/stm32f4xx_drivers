@@ -83,12 +83,12 @@
 
 /* Base addresses of peripherals hanging on APB2 bus */
 
-#define EXTI_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3C00)
-#define SPI1_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3000)
-#define SPI4_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3400)
-#define SYSCFG_BASEADDR					(AHB2PERIPH_BASEADDR + 0x3800)
-#define USART1_BASEADDR					(AHB2PERIPH_BASEADDR + 0x1000)
-#define USART6_BASEADDR					(AHB2PERIPH_BASEADDR + 0x1400)
+#define EXTI_BASEADDR					(APB2PERIPH_BASEADDR + 0x3C00)
+#define SPI1_BASEADDR					(APB2PERIPH_BASEADDR + 0x3000)
+#define SPI4_BASEADDR					(APB2PERIPH_BASEADDR + 0x3400)
+#define SYSCFG_BASEADDR					(APB2PERIPH_BASEADDR + 0x3800)
+#define USART1_BASEADDR					(APB2PERIPH_BASEADDR + 0x1000)
+#define USART6_BASEADDR					(APB2PERIPH_BASEADDR + 0x1400)
 
 
 /************************ Peripheral register definition structures**************************/
@@ -189,6 +189,7 @@ typedef struct
 	volatile uint32_t MEMRMP;		/* SYSCFG memory remap register 						*/
 	volatile uint32_t PMC;			/* SYSCFG peripheral mode configuration register 		*/
 	volatile uint32_t EXTICR[4];	/* SYSCFG external interrupt configuration registers 	*/
+	uint32_t RESERVED1[2];			/* Reserved												*/
 	volatile uint32_t CMPCR;		/* SYSCFG Compensation cell control register 			*/
 }SYSCFG_RegDef_t;
 
