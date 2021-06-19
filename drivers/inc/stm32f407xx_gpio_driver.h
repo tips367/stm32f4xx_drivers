@@ -24,7 +24,7 @@ typedef struct
 /** Handle structure for GPIO pin **/
 typedef struct
 {
-	GPIO_RegDef_t *pGPIOx;
+	GPIO_RegDef_t *pGPIOx;			/* This holds the base address of GPIOx peripheral */
 	GPIO_PinConfig_t GPIO_PinConfig;
 }GPIO_Handle_t;
 

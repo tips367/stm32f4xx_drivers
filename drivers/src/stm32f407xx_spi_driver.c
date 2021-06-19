@@ -14,17 +14,14 @@
  *
  * 	@param[in]			-	base address of SPI peripheral
  * 	@param[in]			-	Enable or disable macros
- * 	@param[in]
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
-void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi )
+void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 {
-	if (EnorDi == ENABLE)
+	if (EnOrDi == ENABLE)
 	{
 		if(pSPIx == SPI1)
 		{
@@ -62,17 +59,16 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi )
  * 	@brief				-	This function initializes the SPIx peripheral.
  *
  * 	@param[in]			-	Handle for SPIx peripheral
- * 	@param[in]			-
- * 	@param[in]
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
 void SPI_Init(SPI_Handle_t *pSPIHandle)
 {
+	// Enable the peripheral clock
+	SPI_PeriClockControl(pSPIHandle->pSPIx, ENABLE);
+
 	// configure the SPI_CR1 register
 	uint32_t tempreg = 0;
 
@@ -116,21 +112,38 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
 /********************************************************************
  * 	@function			-	SPI_DeInit
  *
- * 	@brief				-	This function deinitializes the SPIx peripheral.
+ * 	@brief				-	This function de-initializes the SPIx peripheral.
  *
  * 	@param[in]			-	Base address for SPIx peripheral
- * 	@param[in]			-
- * 	@param[in]
  *
  * 	@return				-	none
  *
  * 	@note				-	none
- *
  */
-
 void SPI_DeInit(SPI_RegDef_t *pSPIx)
 {
 
+}
+
+/********************************************************************
+ * 	@function			-	SPI_GetFlagStatus
+ *
+ * 	@brief				-	This function returns the flag status
+ *
+ * 	@param[in]			-	Base address for SPIx peripheral
+ * 	@param[in]			-	name of SPI related status flag
+ *
+ * 	@return				-	SET/RESET
+ *
+ * 	@note				-	none
+ */
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName)
+{
+	if(pSPIx->SR & flagName)
+	{
+		return FLAG_SET;
+	}
+	return FLAG_RESET;
 }
 
 /********************************************************************
@@ -145,15 +158,13 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx)
  * 	@return				-	none
  *
  * 	@note				-	This is blocking call (Polling based)
- *
  */
-
-void SPI_SendData(SPI_RegDef_t *pSPIx,uint8_t *pTxBuffer,uint32_t len)
+void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t len)
 {
 	while (len > 0)
 	{
 		//1. wait until TXE is set
-		while (!(pSPIx->SR & (1<<SPI_SR_TXE)));
+		while (SPI_GetFlagStatus(pSPIx, SPI_TXE_FLAG) == FLAG_RESET);
 
 		//2. check the DFF bit in CR1
 		if((pSPIx->CR1 & (1 << SPI_CR1_DFF)))
@@ -172,5 +183,53 @@ void SPI_SendData(SPI_RegDef_t *pSPIx,uint8_t *pTxBuffer,uint32_t len)
 			len--;
 			pTxBuffer++;
 		}
+	}
+}
+
+/*********************************************************************
+ * @function      	  - SPI_PeripheralControl
+ *
+ * @brief             - enable or disable SPI peripheral
+ *
+ * @param[in]         - Base address for SPIx peripheral
+ * @param[in]         - Enable or disable macros
+ *
+ * @return            - none
+ *
+ * @note              - none
+ */
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
+{
+	if(EnOrDi == ENABLE)
+	{
+		pSPIx->CR1 |=  (1 << SPI_CR1_SPE);
+	}
+	else
+	{
+		pSPIx->CR1 &=  ~(1 << SPI_CR1_SPE);
+	}
+}
+
+/*********************************************************************
+ * @function      	  - SPI_SSIConfig
+ *
+ * @brief             - configures the SSI bit of CR1
+ *
+ * @param[in]         - Base address for SPIx peripheral
+ * @param[in]         - Enable or disable macros
+ *
+ * @return            - none
+ *
+ * @note              - none
+ */
+void  SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
+{
+	if(EnOrDi == ENABLE)
+	{
+		pSPIx->CR1 |=  (1 << SPI_CR1_SSI);
+	}
+	else
+	{
+		pSPIx->CR1 &=  ~(1 << SPI_CR1_SSI);
 	}
 }
