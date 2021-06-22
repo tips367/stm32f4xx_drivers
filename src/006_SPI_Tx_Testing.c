@@ -37,13 +37,13 @@ void SPI2_GPIOInit(void)
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
 	GPIO_Init(&SPIPins);
 
-	// MISO pin config
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-	GPIO_Init(&SPIPins);
+	// MISO pin config (not required for this application)
+	// SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+	// GPIO_Init(&SPIPins);
 
-	// NSS pin config
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-	GPIO_Init(&SPIPins);
+	// NSS pin config (not required as software slave management is being done)
+	// SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	// GPIO_Init(&SPIPins);
 }
 
 void SPI2_Init(void)
@@ -53,11 +53,11 @@ void SPI2_Init(void)
 	SPI2Handle.pSPIx = SPI2;
 	SPI2Handle.SPI_Config.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2Handle.SPI_Config.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	SPI2Handle.SPI_Config.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV2;
+	SPI2Handle.SPI_Config.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV2;	//generates sclk of 8 MHz
 	SPI2Handle.SPI_Config.SPI_DFF = SPI_DFF_8BITS;
 	SPI2Handle.SPI_Config.SPI_CPOL = SPI_CPOL_HIGH;
 	SPI2Handle.SPI_Config.SPI_CPHA = SPI_CPHA_LOW;
-	SPI2Handle.SPI_Config.SPI_SSM = SPI_SSM_EN;
+	SPI2Handle.SPI_Config.SPI_SSM = SPI_SSM_EN;			//software slave management enabled for NSS pin
 
 	SPI_Init(&SPI2Handle);
 }
@@ -80,6 +80,9 @@ int main(void)
 
 	// send data
 	SPI_SendData(SPI2, (uint8_t*)data, strlen(data));
+
+	// confirm SPI is not busy
+	while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
 
 	// Disable the SPI2 peripheral
 	SPI_PeripheralControl(SPI2, DISABLE);
