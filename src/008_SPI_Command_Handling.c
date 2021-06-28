@@ -161,7 +161,7 @@ int main(void)
 		SPI_SendData(SPI2, &dummy_write, 1);
 
 		//read the ack byte received
-		SPI_ReceiveData(SPI2,&ackByte, 1);
+		SPI_ReceiveData(SPI2, &ackByte, 1);
 
 		if(SPI_VerifyResponse(ackByte))
 		{
@@ -177,7 +177,7 @@ int main(void)
 		//2. CMD_SENOSR_READ   <analog pin number(1) >
 
 		// wait till button is pressed
-		while(! GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
+		while(!GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
 
 		//to avoid button de-bouncing related issues
 		delay();
