@@ -55,7 +55,7 @@ void SPI2_Init(void)
 	SPI2Handle.pSPIx = SPI2;
 	SPI2Handle.SPI_Config.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2Handle.SPI_Config.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	SPI2Handle.SPI_Config.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8;	// generates sclk of 2 MHz
+	SPI2Handle.SPI_Config.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
 	SPI2Handle.SPI_Config.SPI_DFF = SPI_DFF_8BITS;
 	SPI2Handle.SPI_Config.SPI_CPOL = SPI_CPOL_LOW;
 	SPI2Handle.SPI_Config.SPI_CPHA = SPI_CPHA_LOW;
@@ -127,5 +127,5 @@ int main(void)
 
 void delay(void)
 {
-	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
+	for(uint32_t i = 0 ; i < 500000 ; i ++);
 }

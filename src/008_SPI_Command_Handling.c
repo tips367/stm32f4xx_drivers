@@ -79,7 +79,7 @@ void SPI2_Init(void)
 	SPI2Handle.pSPIx = SPI2;
 	SPI2Handle.SPI_Config.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2Handle.SPI_Config.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	SPI2Handle.SPI_Config.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8;	// generates sclk of 2 MHz
+	SPI2Handle.SPI_Config.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
 	SPI2Handle.SPI_Config.SPI_DFF = SPI_DFF_8BITS;
 	SPI2Handle.SPI_Config.SPI_CPOL = SPI_CPOL_LOW;
 	SPI2Handle.SPI_Config.SPI_CPHA = SPI_CPHA_LOW;
@@ -333,7 +333,7 @@ int main(void)
 				SPI_SendData(SPI2, &dummy_write, 1);
 				SPI_ReceiveData(SPI2, &id[i], 1);
 			}
-			id[11] = '\0';
+			id[10] = '\0';
 			printf("COMMAND_ID : %s \n",id);
 		}
 		// end of CMD_ID_READ

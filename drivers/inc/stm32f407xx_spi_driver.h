@@ -45,6 +45,14 @@ typedef struct
 #define SPI_BUSY_IN_TX 				2
 
 /*
+ * Possible SPI Application events
+ */
+#define SPI_EVENT_TX_COMPLETE   1
+#define SPI_EVENT_RX_COMPLETE   2
+#define SPI_EVENT_OVR_ERR    	3
+#define SPI_EVENT_CRC_ERR    	4
+
+/*
  * @SPI_DeviceMode
  */
 #define SPI_DEVICE_MODE_MASTER	1
@@ -107,7 +115,6 @@ typedef struct
  */
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
-
 /*
  *  Init and De-init
  */
@@ -140,5 +147,13 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName);
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+void SPI_ClearOVRFlag(SPI_RegDef_t *pSPIx);
+void SPI_CloseTransmisson(SPI_Handle_t *pSPIHandle);
+void SPI_CloseReception(SPI_Handle_t *pSPIHandle);
+
+/*
+ * Application callback
+ */
+void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t AppEv);
 
 #endif /* INC_STM32F407XX_SPI_DRIVER_H_ */
