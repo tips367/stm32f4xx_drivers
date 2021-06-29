@@ -58,6 +58,9 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.582207382.1559854338" name="008_SPI_Command_Handling.c" rcbsApplicability="disable" resourcePath="src/008_SPI_Command_Handling.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017.782918023">
+						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017.782918023" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1925157017"/>
+					</fileInfo>
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.582207382.1271380353" name="/" resourcePath="drivers">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.693890270" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
 							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.1464752063.616276093" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu.1464752063"/>
@@ -81,7 +84,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="drivers"/>
-						<entry excluding="007_SPI_Tx_Only_Arduino.c|006_SPI_Tx_Testing.c|005_Button_Interrupt.c|004_LED_Button_ext.c|003_LED_Button.c|002_LED_Toggle_Open_Drain.c|001_LED_Toggle_Push_Pull.c|002_LED_Button.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="008_SPI_Command_Handling.c|007_SPI_Tx_Only_Arduino.c|006_SPI_Tx_Testing.c|005_Button_Interrupt.c|004_LED_Button_ext.c|003_LED_Button.c|002_LED_Toggle_Open_Drain.c|001_LED_Toggle_Push_Pull.c|002_LED_Button.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry excluding="sysmem.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
 					</sourceEntries>
 				</configuration>
